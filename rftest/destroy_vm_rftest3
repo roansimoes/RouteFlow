@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ "$EUID" != "0" ]; then
+  echo "You must be root to run this script. Sorry, dude!"
+  exit 1
+fi
+
+LXCDIR="/var/lib/lxc"
+CONFIG="config_rftest3"
+
+# Clone the base container to make other containers based on config
+cd $CONFIG
+for VM in *
+do
+    lxc-destroy -n $VM
+done
